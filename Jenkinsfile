@@ -60,14 +60,17 @@ pipeline{
             }
         }
 
-        stage('Maven Build : maven'){
+        stage('Quality Gate Status Check : Sonarqube'){
             when { expression {  params.action == 'create' } }
             steps{
                 script{
-                    mvnBuild()
+                    def SonarQubecredentialsId = 'sonar-token'
+                    QualityGateStatus(SonarQubecredentialsId)
                 }
             }
         }
+
+
 
     }
 }

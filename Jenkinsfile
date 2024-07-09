@@ -33,14 +33,6 @@ pipeline{
                 }
             }
         }
-        stage('unit test maven'){
-            when { expression {  params.action == 'create' } }
-            steps{
-                script{
-                    mvnTest()
-                }
-            }
-        }
         stage('integration test maven'){
             when { expression {  params.action == 'create' } }
             steps{

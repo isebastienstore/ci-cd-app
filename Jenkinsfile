@@ -33,6 +33,7 @@ pipeline{
                 }
             }
         }
+
         stage('integration test maven'){
             when { expression {  params.action == 'create' } }
             steps{
@@ -62,7 +63,14 @@ pipeline{
             }
         }
 
-
+        stage('Maven Build : maven'){
+            when { expression {  params.action == 'create' } }
+            steps{
+                script{
+                    mvnBuild()
+                }
+            }
+        }
 
     }
 }

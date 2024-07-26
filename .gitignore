@@ -4,7 +4,6 @@
 /node/
 node_tmp/
 node_modules/
-eks_module/.terraform/
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*

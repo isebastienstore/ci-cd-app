@@ -1,13 +1,11 @@
 variable "access_key" {
-    default = ""
 }
 variable "secret_key" {
-    default = ""
+
 }
 
 
 variable "region" {
-    default = "eu-west-3"
 }
 
 variable "aws_eks_cluster_config" {

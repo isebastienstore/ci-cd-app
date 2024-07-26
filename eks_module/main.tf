@@ -140,6 +140,7 @@ variable "subnet_ids" {
 variable "tags" {
     description = "Tags for the resources"
     type        = map(string)
+    default = {}
 }
 
 variable "node_group_name" {

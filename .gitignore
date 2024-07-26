@@ -4,7 +4,7 @@
 /node/
 node_tmp/
 node_modules/
-eks_module/.terraform
+eks_module/.terraform/providers/registry.terraform.io/hashicorp/aws/3.76.1/windows_amd64/terraform-provider-aws_v3.76.1_x5.exe
 npm-debug.log.*
 /.awcache/*
 /.cache-loader/*

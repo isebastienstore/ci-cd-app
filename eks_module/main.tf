@@ -4,7 +4,7 @@
 resource "aws_eks_cluster" "eks" {
     name     = var.eks_cluster_name
     role_arn = aws_iam_role.eks_cluster.arn
-    version  = "1.24"
+    version  = "1.25"
 
     vpc_config {
         endpoint_private_access = false
@@ -70,7 +70,7 @@ resource "aws_eks_node_group" "nodes_general" {
     disk_size      = 20
     force_update_version = false
     instance_types = ["t2.medium"]
-    version        = "1.24"
+    version        = "1.25"
 
     depends_on = [
         aws_iam_role_policy_attachment.amazon_eks_worker_node_policy_general,

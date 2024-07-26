@@ -15,7 +15,9 @@ resource "aws_eks_cluster" "eks" {
     depends_on = [
         aws_iam_role_policy_attachment.amazon_eks_cluster_policy
     ]
-    tags = var.tags
+    tags = {
+        "Name" =  "demo-cluster"
+    }
 }
 
 # Ressource pour le rôle IAM du cluster EKS
@@ -75,7 +77,9 @@ resource "aws_eks_node_group" "nodes_general" {
         aws_iam_role_policy_attachment.amazon_eks_cni_policy_general,
         aws_iam_role_policy_attachment.amazon_ec2_container_registry_read_only,
     ]
-    tags = var.tags
+    tags = {
+        "Name" =  "node1"
+    }
 }
 
 # Ressource pour le rôle IAM des nœuds EKS

@@ -21,7 +21,10 @@ pipeline{
             when { expression {  params.action == 'create' } }
             steps{
                 script{
-                    gitCheckout()
+                    gitCheckout(
+                        branch: "main",
+                        url: "https://github.com/isebastienstore/ci-cd-app.git"
+                    )
                 }
             }
         }
@@ -35,21 +38,5 @@ pipeline{
             }
         }
 
-        stage('Create EKS Cluster : Terraform'){
-            when { expression {  params.action == 'create' } }
-            steps{
-                script{
-
-                    dir('eks_module') {
-                      bat """
-                          terraform init
-                          terraform destroy -var "access_key=${ACCESS_KEY}" -var "secret_key=${SECRET_KEY}" -var "region=${params.Region}" --var-file=./config/terraform.tfvars
-                          terraform plan -out=plan.tfplan -var "access_key=${ACCESS_KEY}" -var "secret_key=${SECRET_KEY}" -var "region=${params.Region}" --var-file=./config/terraform.tfvars
-                          terraform apply -var "access_key=${ACCESS_KEY}" -var "secret_key=${SECRET_KEY}" -var "region=${params.Region}" --var-file=./config/terraform.tfvars --auto-approve
-                      """
-                  }
-                }
-            }
-        }
     }
 }

@@ -10,8 +10,8 @@ npm-debug.log.*
 
 
 # Ignore le dossier .terraform sous eks_module
-eks_module/.terraform/
-
+**/.terraform/
+**/.terraform.lock.hcl
 
 ######################
 # SASS

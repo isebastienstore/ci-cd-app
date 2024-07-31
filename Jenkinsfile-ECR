@@ -124,7 +124,7 @@ pipeline{
             steps{
                 script{
                     bat """
-                      kubectl apply -f .
+                      kubectl apply -f deployment.yaml
                     """
                 }
             }

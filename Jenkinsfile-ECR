@@ -38,47 +38,40 @@ pipeline{
             }
         }
 
-        stage('Maven Build : maven'){
-            when { expression {  params.action == 'create' } }
+        stage('Initializing Terraform'){
             steps{
                 script{
-                    mvnBuild()
+                    dir('eks_module'){
+                        sh 'terraform init'
+                    }
                 }
             }
         }
-
-        stage('Docker image build: ECR'){
-            when { expression { params.action == 'create' } }
+        stage('Formatting Terraform Code'){
             steps{
                 script{
-                    dockerBuild("${params.aws_account_id}", "${params.Region}", "${params.ECR_REPO_NAME}")
+                    dir('eks_module'){
+                        sh 'terraform fmt'
+                    }
                 }
             }
         }
-
-        stage('Docker image scan: trivy'){
-            when{ expression { params.action == 'create'} }
+        stage('Validating Terraform'){
             steps{
                 script{
-                    dockerImageScan("${params.aws_account_id}", "${params.Region}", "${params.ECR_REPO_NAME}")
+                    dir('eks_module'){
+                        sh 'terraform validate'
+                    }
                 }
             }
         }
-
-        stage('Docker image push: ECR'){
-            when{ expression { params.action == 'create'} }
+        stage('Previewing the Infra using Terraform'){
             steps{
                 script{
-                    dockerImagePush("${params.aws_account_id}", "${params.Region}", "${params.ECR_REPO_NAME}")
-                }
-            }
-        }
-
-        stage('Docker image cleanup: ECR'){
-            when{ expression { params.action == 'create'} }
-            steps{
-                script{
-                    dockerImageCleanup("${params.aws_account_id}", "${params.Region}", "${params.ECR_REPO_NAME}")
+                    dir('eks_module'){
+                        sh 'terraform plan'
+                    }
+                    input(message: "Are you sure to proceed?", ok: "Proceed")
                 }
             }
         }

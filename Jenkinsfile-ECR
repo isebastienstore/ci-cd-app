@@ -53,6 +53,7 @@ pipeline{
                 }
             }
         }
+
         stage('Formatting Terraform Code'){
             steps{
                 script{
@@ -62,6 +63,7 @@ pipeline{
                 }
             }
         }
+
         stage('Validating Terraform'){
             steps{
                 script{
@@ -71,6 +73,7 @@ pipeline{
                 }
             }
         }
+
         stage('Previewing the Infra using Terraform'){
             steps{
                 script{
@@ -82,6 +85,20 @@ pipeline{
                         """
                     }
                     //input(message: "Are you sure to proceed?", ok: "Proceed")
+                }
+            }
+        }
+
+        stage('Creating an EKS Cluster'){
+            steps{
+                script{
+                    dir('eks_module') {
+                        bat """
+                            set AWS_ACCESS_KEY_ID=%ACCESS_KEY%
+                            set AWS_SECRET_ACCESS_KEY=%SECRET_KEY%
+                            terraform apply --auto-approve
+                            """
+                    }
                 }
             }
         }

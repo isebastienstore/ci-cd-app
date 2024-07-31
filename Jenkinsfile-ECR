@@ -42,7 +42,7 @@ pipeline{
             steps{
                 script{
                     dir('eks_module'){
-                        sh 'terraform init'
+                        bat 'terraform init'
                     }
                 }
             }
@@ -51,7 +51,7 @@ pipeline{
             steps{
                 script{
                     dir('eks_module'){
-                        sh 'terraform fmt'
+                        bat 'terraform fmt'
                     }
                 }
             }
@@ -60,7 +60,7 @@ pipeline{
             steps{
                 script{
                     dir('eks_module'){
-                        sh 'terraform validate'
+                        bat 'terraform validate'
                     }
                 }
             }
@@ -69,7 +69,7 @@ pipeline{
             steps{
                 script{
                     dir('eks_module'){
-                        sh 'terraform plan'
+                        bat 'terraform plan'
                     }
                     input(message: "Are you sure to proceed?", ok: "Proceed")
                 }

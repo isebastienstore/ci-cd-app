@@ -104,28 +104,15 @@ pipeline{
             }
         }
 
-        stage('Connect to EKS '){
-            when { expression {  params.action == 'create' } }
-            steps{
-                script{
-
-                    bat """
-                        aws configure set aws_access_key_id "$ACCESS_KEY"
-                        aws configure set aws_secret_access_key "$SECRET_KEY"
-                        aws configure set region "${params.Region}"
-                        aws eks --region ${params.Region} update-kubeconfig --name ${params.cluster}
-                    """
-                }
-            }
-        }
-
         stage('Deployment on EKS Cluster'){
             when { expression {  params.action == 'create' } }
             steps{
                 script{
                     bat """
-                      set AWS_ACCESS_KEY_ID=%ACCESS_KEY%
-                      set AWS_SECRET_ACCESS_KEY=%SECRET_KEY%
+                      aws configure set aws_access_key_id "$ACCESS_KEY"
+                      aws configure set aws_secret_access_key "$SECRET_KEY"
+                      aws configure set region "${params.Region}"
+                      aws eks --region ${params.Region} update-kubeconfig --name ${params.cluster}
                       kubectl apply -f deployment.yaml
                     """
                 }

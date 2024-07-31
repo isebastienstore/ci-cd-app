@@ -37,21 +37,16 @@ pipeline{
                 }
             }
         }
-        stage('Debug AWS Credentials') {
-            steps {
-                script {
-                    bat 'echo %ACCESS_KEY%'
-                    bat 'echo %SECRET_KEY%'
-                }
-            }
-        }
-
 
         stage('Initializing Terraform'){
             steps{
                 script{
                     dir('eks_module'){
-                        bat 'terraform init'
+                        bat """
+                            export AWS_ACCESS_KEY_ID=${ACCESS_KEY}
+                            export AWS_SECRET_ACCESS_KEY=${SECRET_KEY}
+                            terraform init
+                            """
                     }
                 }
             }

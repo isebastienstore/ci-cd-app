@@ -46,7 +46,8 @@ pipeline{
                          set AWS_ACCESS_KEY_ID=%ACCESS_KEY%
                          set AWS_SECRET_ACCESS_KEY=%SECRET_KEY%
 
-                            terraform init
+                            terraform init -backend-config="bucket=cicd-terraform--eks" -backend-config="key=eks/terraform.tfstate" -backend-config="region=eu-west-3" -force-copy
+
                             """
                     }
                 }

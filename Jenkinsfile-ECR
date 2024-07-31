@@ -124,6 +124,8 @@ pipeline{
             steps{
                 script{
                     bat """
+                      set AWS_ACCESS_KEY_ID=%ACCESS_KEY%
+                      set AWS_SECRET_ACCESS_KEY=%SECRET_KEY%
                       kubectl apply -f deployment.yaml
                     """
                 }

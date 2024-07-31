@@ -37,6 +37,13 @@ pipeline{
                 }
             }
         }
+        stage('Debug Environment') {
+            steps {
+                script {
+                    sh 'env | grep AWS'
+                }
+            }
+        }
 
         stage('Initializing Terraform'){
             steps{

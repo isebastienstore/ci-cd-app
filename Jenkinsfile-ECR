@@ -75,7 +75,11 @@ pipeline{
             steps{
                 script{
                     dir('eks_module'){
-                        bat 'terraform plan'
+                        bat """
+                            set AWS_ACCESS_KEY_ID=%ACCESS_KEY%
+                            set AWS_SECRET_ACCESS_KEY=%SECRET_KEY%
+                            terraform plan
+                        """
                     }
                     input(message: "Are you sure to proceed?", ok: "Proceed")
                 }

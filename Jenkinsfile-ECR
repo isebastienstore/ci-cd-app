@@ -37,13 +37,15 @@ pipeline{
                 }
             }
         }
-        stage('Debug Environment') {
+        stage('Debug AWS Credentials') {
             steps {
                 script {
-                    bat 'set | findstr AWS'
+                    bat 'echo %ACCESS_KEY%'
+                    bat 'echo %SECRET_KEY%'
                 }
             }
         }
+
 
         stage('Initializing Terraform'){
             steps{
